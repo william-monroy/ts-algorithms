@@ -87,9 +87,9 @@ function testTrie() {
     console.log(trie.suggest("hel"));
 }
 
-function searchText(text: string) : string[] {
+export function searchText(text: string, prefix: string) : string[] {
     let words = text.split(" ");
     let trie = new Trie();
     words.forEach((word) => trie.insert(word));
-    return trie.suggest("hel");
+    return trie.suggest(prefix);
 }
