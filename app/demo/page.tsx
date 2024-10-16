@@ -4,11 +4,6 @@ import { Button } from "@nextui-org/button";
 import { Input, Textarea } from "@nextui-org/input";
 import { Card } from "@nextui-org/card";
 import { ChangeEvent, useState } from "react";
-// import {
-//   input as InputStyle,
-//   // area as TextAreaStyle,
-// } from "@nextui-org/theme";
-
 import {
   Modal,
   ModalBody,
@@ -17,10 +12,11 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/modal";
+import { ScrollShadow } from "@nextui-org/scroll-shadow";
 
 import { title } from "@/components/primitives";
 import { z } from "@/lib/z";
-import { trie } from "@/lib/trie";
+// import { trie } from "@/lib/trie";
 
 const Demo = () => {
   const [textInput1, setTextInput1] = useState("");
@@ -87,8 +83,7 @@ const Demo = () => {
       <Card className="flex flex-row w-full gap-2 p-4">
         <div className="flex flex-col w-6/12 gap-2">
           <input accept=".txt" type="file" onChange={handleFile1Read} />
-          <textarea
-            className="border p-2"
+          <Textarea
             placeholder="Type here..."
             rows={10} // Ajusta el tamaño según sea necesario
             value={textInput1}
@@ -125,22 +120,24 @@ const Demo = () => {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Modal Title
+                Results for pattern search &quot;{patternText}&quot;
               </ModalHeader>
               <ModalBody>
-                <div
-                  dangerouslySetInnerHTML={{ __html: highlightText() }}
-                  className="border p-2 mt-4"
-                  style={{ whiteSpace: "pre-wrap" }} // Para mantener los saltos de línea
-                />
+                <ScrollShadow className="w-full h-full max-h-96">
+                  <div
+                    dangerouslySetInnerHTML={{ __html: highlightText() }}
+                    // className="border p-2 mt-4"
+                    style={{ whiteSpace: "pre-wrap" }} // Para mantener los saltos de línea
+                  />
+                </ScrollShadow>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                {/* <Button color="primary" onPress={onClose}>
                   Action
-                </Button>
+                </Button> */}
               </ModalFooter>
             </>
           )}
