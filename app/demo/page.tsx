@@ -110,17 +110,17 @@ const Demo = () => {
             value={textInput1}
             onChange={(e) => setTextInput1(e.target.value)}
           />
+          <Input
+            placeholder="Type here..."
+            value={patternText}
+            onChange={(e) => setPatternText(e.target.value)}
+          />
           <div className="flex flex-row gap-2">
-            <Input
-              placeholder="Type pattern..."
-              value={patternText}
-              onChange={(e) => setPatternText(e.target.value)}
-            />
             <Button color="primary" onClick={handleSearchPattern}>
-              Search
+              Search pattern
             </Button>
+            <Button color="secondary">Search palindrome</Button>
           </div>
-          <Button color="secondary">Search palindrome</Button>
           <Input placeholder="Autocomplete here..." />
         </div>
         <div className="flex flex-col w-6/12 gap-2">

@@ -1,4 +1,5 @@
 import { Link } from "@nextui-org/link";
+import NextLink from "next/link";
 import { Snippet } from "@nextui-org/snippet";
 import { Code } from "@nextui-org/code";
 import { button as buttonStyles } from "@nextui-org/theme";
@@ -21,9 +22,11 @@ export default function Home() {
       </div>
 
       <div className="flex gap-3">
-        <Button color="primary" radius="full" variant="shadow">
-          Get Started
-        </Button>
+        <Link as={NextLink} href={siteConfig.navItems[1].href}>
+          <Button color="primary" radius="full" variant="shadow">
+            Get Started
+          </Button>
+        </Link>
         <Link
           isExternal
           className={buttonStyles({ variant: "bordered", radius: "full" })}

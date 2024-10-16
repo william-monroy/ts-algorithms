@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="200" height="200">
+  <!-- Fondo del logo -->
+  <rect width="100" height="100" fill="#007ACC" rx="15" ry="15" />
+  
+  <!-- Letras "TS" -->
+  <text x="10" y="40" fill="#fff" font-size="35" font-family="Arial, sans-serif" font-weight="bold">TS</text>
+  
+  <!-- Representación de un algoritmo (nodos y conexiones) -->
+  <circle cx="55" cy="50" r="6" fill="#fff" />
+  <circle cx="75" cy="75" r="6" fill="#fff" />
+  <circle cx="55" cy="75" r="6" fill="#fff" />
+  <circle cx="35" cy="75" r="6" fill="#fff" />
+  
+  <!-- Conexiones entre nodos -->
+  <line x1="55" y1="50" x2="75" y2="75" stroke="#fff" stroke-width="3" />
+  <line x1="55" y1="50" x2="35" y2="75" stroke="#fff" stroke-width="3" />
+  <line x1="55" y1="50" x2="55" y2="75" stroke="#fff" stroke-width="3" />
+</svg>
