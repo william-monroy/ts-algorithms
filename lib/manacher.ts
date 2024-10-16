@@ -1,4 +1,4 @@
-import z from "./z";
+import { z } from "./z";
 
 function manacher(D: string): string {
     // Transform the input string to handle even-length palindromes
