@@ -1,7 +1,9 @@
 function zArray(S: string): number[] {
   const n = S.length;
   const Z = new Array(n).fill(0);
-  let l = 0, r = 0, k = 0;
+  let l = 0,
+    r = 0,
+    k = 0;
 
   for (let i = 1; i < n; i++) {
     if (i > r) {
@@ -29,7 +31,13 @@ function zArray(S: string): number[] {
   return Z;
 }
 
-function z(T: string, P: string): number[] {
+/**
+ *
+ * @param T Text to search
+ * @param P Pattern to search in text
+ * @returns Array of positions where pattern is found in text
+ */
+export function z(T: string, P: string): number[] {
   const S = P + "$" + T;
   const l = S.length;
   const Z = zArray(S);
