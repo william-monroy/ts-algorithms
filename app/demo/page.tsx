@@ -11,6 +11,7 @@ import { ChangeEvent, useState } from "react";
 
 import { title } from "@/components/primitives";
 import { z } from "@/lib/z";
+import { trie } from "@/lib/trie";
 
 const Demo = () => {
   const [textInput1, setTextInput1] = useState("");
