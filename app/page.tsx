@@ -2,6 +2,7 @@ import { Link } from "@nextui-org/link";
 import { Snippet } from "@nextui-org/snippet";
 import { Code } from "@nextui-org/code";
 import { button as buttonStyles } from "@nextui-org/theme";
+import { Button } from "@nextui-org/button";
 
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
@@ -20,17 +21,9 @@ export default function Home() {
       </div>
 
       <div className="flex gap-3">
-        <Link
-          isExternal
-          className={buttonStyles({
-            color: "primary",
-            radius: "full",
-            variant: "shadow",
-          })}
-          href={siteConfig.links.docs}
-        >
-          Documentation
-        </Link>
+        <Button color="primary" radius="full" variant="shadow">
+          Get Started
+        </Button>
         <Link
           isExternal
           className={buttonStyles({ variant: "bordered", radius: "full" })}
@@ -42,9 +35,12 @@ export default function Home() {
       </div>
 
       <div className="mt-8">
+        <p className="text-center text-lg font-semibold">What is icluded?</p>
+        <br />
         <Snippet hideCopyButton hideSymbol variant="bordered">
           <span>
-            Get started by editing <Code color="primary">app/page.tsx</Code>
+            Search palindromes with
+            <Code color="primary">z-algorithm</Code>
           </span>
         </Snippet>
       </div>

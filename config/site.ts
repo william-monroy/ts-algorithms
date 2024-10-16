@@ -8,6 +8,10 @@ export const siteConfig = {
       label: "Home",
       href: "/",
     },
+    {
+      label: "Demo",
+      href: "/demo",
+    },
   ],
   navMenuItems: [
     {
@@ -16,6 +20,6 @@ export const siteConfig = {
     },
   ],
   links: {
-    github: "https://github.com/nextui-org/nextui",
+    github: "https://github.com/william-monroy/ts-algorithms",
   },
 };
