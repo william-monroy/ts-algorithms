@@ -1,3 +1,5 @@
+import { z } from "./z";
+
 function manacher(D: string): string {
     // Transform the input string to handle even-length palindromes
     let T = "#";
@@ -40,4 +42,10 @@ function manacher(D: string): string {
     // Extract the longest palindromic substring
     const start = (centerIndex - maxLen) / 2;
     return D.substring(start, start + maxLen);
+}
+
+export function findPalindrom(text: string) : number[] {
+    let palindrome = manacher(text);
+    let positions = z(text, palindrome);
+    return positions;
 }

@@ -88,7 +88,7 @@ function testTrie() {
 }
 
 export function searchText(text: string, prefix: string) : string[] {
-    let words = text.split(" ");
+    let words = text.split(/\W+/).filter(word => word.trim().length > 0);
     let trie = new Trie();
     words.forEach((word) => trie.insert(word));
     return trie.suggest(prefix);
