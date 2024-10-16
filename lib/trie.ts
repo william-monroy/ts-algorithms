@@ -49,6 +49,41 @@ class Trie {
         }
         return true;
     }
+
+    suggestHelper(node: TrieNode, curr: string, suggestions: string[]): void {
+        if (node.isEndOfWord) {
+            suggestions.push(curr);
+        }
+        if (Object.keys(node.children).length === 0) {
+            return;
+        }
+
+        for (let child in node.children) {
+            this.suggestHelper(node.children[child], curr + child, suggestions);
+        }
+    }
+
+    suggest(prefix: string) : string[] {
+        let node = this.root;
+        let curr = "";
+        for (let i = 0; i < prefix.length; i++) {
+            if (!node.children[prefix[i]]) {
+                return [];
+            }
+            node = node.children[prefix[i]];
+            curr += prefix[i];
+        }
+        let suggestions: string[] = [];
+        this.suggestHelper(node, curr, suggestions);
+        return suggestions;
+    }
+
 }
+
+let words = ["hello", "dog", "hell", "cat", "a", "hel","help","helps","helping"];
+let trie = new Trie();
+words.forEach((word) => trie.insert(word));
+console.log(trie.suggest("hel"));
+
 
 module.exports = Trie;
