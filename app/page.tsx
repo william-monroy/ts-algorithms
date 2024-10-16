@@ -39,8 +39,10 @@ export default function Home() {
         <br />
         <Snippet hideCopyButton hideSymbol variant="bordered">
           <span>
-            Search palindromes with
-            <Code color="primary">z-algorithm</Code>
+            Search patterns with&nbsp;
+            <Link isExternal href={siteConfig.links.z}>
+              <Code color="primary">z-algorithm</Code>
+            </Link>
           </span>
         </Snippet>
       </div>
