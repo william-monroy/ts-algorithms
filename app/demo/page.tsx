@@ -116,11 +116,11 @@ const Demo = () => {
               value={patternText}
               onChange={(e) => setPatternText(e.target.value)}
             />
-            <Button color="primary" onClick={handleSearchPattern}>
+            <Button color="primary" onClick={handleSearchPattern} isDisabled={textInput1 === ""}>
               Search
             </Button>
           </div>
-          <Button color="secondary">Search palindrome</Button>
+          <Button color="secondary" isDisabled={textInput1 === ""}>Search palindrome</Button>
           <Input placeholder="Autocomplete here..." />
         </div>
         <div className="flex flex-col w-6/12 gap-2">
@@ -152,7 +152,7 @@ const Demo = () => {
             value={textInput2}
             onChange={(e) => setTextInput2(e.target.value)}
           />
-          <Button color="warning">Find common subsequence</Button>
+          <Button color="warning" isDisabled={textInput1 === "" || textInput2 === ""}>Find common subsequence</Button>
         </div>
       </Card>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
