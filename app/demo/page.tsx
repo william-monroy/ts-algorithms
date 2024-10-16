@@ -9,6 +9,15 @@ import { ChangeEvent, useState } from "react";
 //   // area as TextAreaStyle,
 // } from "@nextui-org/theme";
 
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from "@nextui-org/modal";
+
 import { title } from "@/components/primitives";
 import { z } from "@/lib/z";
 
@@ -17,6 +26,8 @@ const Demo = () => {
   const [textInput2, setTextInput2] = useState("");
   const [patternText, setPatternText] = useState("");
   const [highlightPositions, setHighlightPositions] = useState<number[]>([]);
+
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const handleFile1Read = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
@@ -44,6 +55,8 @@ const Demo = () => {
     const positions = z(textInput1, patternText);
 
     setHighlightPositions(positions);
+
+    onOpen();
   };
 
   const highlightText = () => {
@@ -73,14 +86,10 @@ const Demo = () => {
       <Card className="flex flex-row w-full gap-2 p-4">
         <div className="flex flex-col w-6/12 gap-2">
           <input accept=".txt" type="file" onChange={handleFile1Read} />
-          {/* <Textarea
+          <textarea
+            className="border p-2"
             placeholder="Type here..."
-            value={textInput1}
-            onChange={(e) => setTextInput1(e.target.value)}
-          /> */}
-          <Textarea
-            dangerouslySetInnerHTML={{ __html: highlightText() }}
-            placeholder="Type here..."
+            rows={10} // Ajusta el tamaño según sea necesario
             value={textInput1}
             onChange={(e) => setTextInput1(e.target.value)}
           />
@@ -93,6 +102,7 @@ const Demo = () => {
             <Button color="primary" onClick={handleSearchPattern}>
               Search
             </Button>
+            {/* <Button onPress={onOpen}>Open Modal</Button> */}
           </div>
           <Button color="secondary">Search palindrome</Button>
           <Input placeholder="Autocomplete here..." />
@@ -105,8 +115,36 @@ const Demo = () => {
             onChange={(e) => setTextInput2(e.target.value)}
           />
           <Button color="warning">Find common subsequence</Button>
+
+          {/* Aquí mostramos el texto resaltado */}
         </div>
       </Card>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Modal Title
+              </ModalHeader>
+              <ModalBody>
+                <div
+                  dangerouslySetInnerHTML={{ __html: highlightText() }}
+                  className="border p-2 mt-4"
+                  style={{ whiteSpace: "pre-wrap" }} // Para mantener los saltos de línea
+                />
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+                <Button color="primary" onPress={onClose}>
+                  Action
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 };
