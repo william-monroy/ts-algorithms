@@ -24,5 +24,6 @@ export const siteConfig = {
     z: "https://github.com/william-monroy/ts-algorithms/blob/main/lib/z.ts",
     manacher:
       "https://github.com/william-monroy/ts-algorithms/blob/main/lib/manacher.ts",
+    lcs: "https://github.com/william-monroy/ts-algorithms/blob/main/lib/lcs.ts",
   },
 };

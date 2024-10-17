@@ -38,9 +38,21 @@ function LCS(s1: string, s2: string): string {
   return lcs;
 }
 
-export function findLCS(text1: string, text2: string): number[] {
+export function findLCS(
+  text1: string,
+  text2: string
+): {
+  length: number;
+  posTxt1: number[];
+  posTxt2: number[];
+} {
   let lcs = LCS(text1, text2);
-  let positions = z(text1, lcs);
+  let positionsText1 = z(text1, lcs);
+  let positionsText2 = z(text2, lcs);
 
-  return positions;
+  return {
+    length: lcs.length,
+    posTxt1: positionsText1,
+    posTxt2: positionsText2,
+  };
 }

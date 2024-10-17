@@ -11,7 +11,7 @@ import { GithubIcon } from "@/components/icons";
 
 export default function Home() {
   return (
-    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
+    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10 px-4">
       <div className="inline-block max-w-xl text-center justify-center">
         <span className={title({ color: "blue" })}>TS&nbsp;</span>
         <span className={title()}>Algorithms</span>
@@ -48,9 +48,15 @@ export default function Home() {
             </Link>
           </span>
           <span>
-            Find the longest palindromic substring with&nbsp;
+            Longest palindromic substring with&nbsp;
             <Link isExternal href={siteConfig.links.manacher}>
               <Code color="primary">manacher</Code>
+            </Link>
+          </span>
+          <span>
+            Longest common subsequence with&nbsp;
+            <Link isExternal href={siteConfig.links.lcs}>
+              <Code color="primary">lcs</Code>
             </Link>
           </span>
         </Snippet>

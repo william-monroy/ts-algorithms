@@ -15,12 +15,29 @@ interface CustomModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  content: ReactNode; // Usamos ReactNode para permitir contenido dinámico
+  content: ReactNode;
+  size?:
+    | "xs"
+    | "sm"
+    | "md"
+    | "lg"
+    | "xl"
+    | "2xl"
+    | "3xl"
+    | "4xl"
+    | "5xl"
+    | "full";
 }
 
-const CustomModal = ({ isOpen, onClose, title, content }: CustomModalProps) => {
+const CustomModal = ({
+  isOpen,
+  onClose,
+  title,
+  content,
+  size = "md",
+}: CustomModalProps) => {
   return (
-    <Modal isOpen={isOpen} onOpenChange={onClose}>
+    <Modal isOpen={isOpen} size={size} onOpenChange={onClose}>
       <ModalContent>
         <>
           <ModalHeader className="flex flex-col gap-1">{title}</ModalHeader>

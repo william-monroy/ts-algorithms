@@ -10,6 +10,7 @@ import CustomModal from "@/components/modal";
 import { title } from "@/components/primitives";
 import { z } from "@/lib/z";
 import { findPalindrom } from "@/lib/manacher";
+import { findLCS } from "@/lib/lcs";
 
 const Demo = () => {
   const [textInput1, setTextInput1] = useState("");
@@ -19,6 +20,9 @@ const Demo = () => {
   const [highlightPositionsPalindrome, setHighlightPositionsPalindrome] =
     useState<number[]>([]);
   const [lenPalinfrome, setLenPalinfrome] = useState(0);
+  const [highlightLCS1, setHighlightLCS1] = useState<number[]>([]);
+  const [highlightLCS2, setHighlightLCS2] = useState<number[]>([]);
+  const [lenLCS, setLenLCS] = useState(0);
 
   const {
     isOpen: isPatternModalOpen,
@@ -29,6 +33,11 @@ const Demo = () => {
     isOpen: isPalindromeModalOpen,
     onOpen: onPalindromeModalOpen,
     onOpenChange: onPalindromeModalClose,
+  } = useDisclosure();
+  const {
+    isOpen: isLCSModalOpen,
+    onOpen: onLCSModalOpen,
+    onOpenChange: onLCSModalClose,
   } = useDisclosure();
 
   const handleFile1Read = (event: ChangeEvent<HTMLInputElement>) => {
@@ -70,33 +79,45 @@ const Demo = () => {
     onPalindromeModalOpen();
   };
 
+  const handleSearchLCS = () => {
+    const { length, posTxt1, posTxt2 } = findLCS(textInput1, textInput2);
+
+    setLenLCS(length);
+    setHighlightLCS1(posTxt1);
+    setHighlightLCS2(posTxt2);
+
+    onLCSModalOpen();
+  };
+
   const highlightText = ({
     bgColor = "yellow",
     textColor = "black",
     highlightPositions,
     highlightLength = patternText.length,
+    textEval = textInput1,
   }: {
     bgColor?: string;
     textColor?: string;
     highlightPositions: number[];
     highlightLength?: number;
+    textEval?: string;
   }) => {
-    if (!highlightPositions.length) return textInput1;
+    if (!highlightPositions.length) return textEval;
 
     const parts = [];
     let lastIndex = 0;
 
     highlightPositions.forEach((pos) => {
-      parts.push(textInput1.substring(lastIndex, pos));
+      parts.push(textEval.substring(lastIndex, pos));
       parts.push(
-        `<mark style="background-color: ${bgColor}; color: ${textColor};">${textInput1.substring(
+        `<mark style="background-color: ${bgColor}; color: ${textColor};">${textEval.substring(
           pos,
           pos + highlightLength
         )}</mark>`
       );
       lastIndex = pos + highlightLength;
     });
-    parts.push(textInput1.substring(lastIndex));
+    parts.push(textEval.substring(lastIndex));
 
     return parts.join("");
   };
@@ -134,7 +155,6 @@ const Demo = () => {
           <Textarea
             id="input_text_1"
             placeholder="Type here or upload a file..."
-            rows={10} // Ajusta el tamaño según sea necesario
             value={textInput1}
             onChange={(e) => setTextInput1(e.target.value)}
           />
@@ -197,6 +217,7 @@ const Demo = () => {
           <Button
             color="warning"
             isDisabled={textInput1 === "" || textInput2 === ""}
+            onClick={handleSearchLCS}
           >
             Find common subsequence
           </Button>
@@ -236,6 +257,48 @@ const Demo = () => {
         isOpen={isPalindromeModalOpen}
         title="Palindrome Search Result"
         onClose={onPalindromeModalClose}
+      />
+
+      {/* Modal para buscar subsecuencia común más larga */}
+      <CustomModal
+        content={
+          <div className="flex flex-row gap-4">
+            <div className="flex flex-col gap-2">
+              <span>Text1</span>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: highlightText({
+                    bgColor: "#02578f",
+                    textColor: "white",
+                    highlightPositions: highlightLCS1,
+                    highlightLength: lenLCS,
+                    textEval: textInput1,
+                  }),
+                }}
+                style={{ whiteSpace: "pre-wrap" }}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <span>Text2</span>
+
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: highlightText({
+                    bgColor: "#02578f",
+                    textColor: "white",
+                    highlightPositions: highlightLCS2,
+                    highlightLength: lenLCS,
+                    textEval: textInput2,
+                  }),
+                }}
+                style={{ whiteSpace: "pre-wrap" }}
+              />
+            </div>
+          </div>
+        }
+        isOpen={isLCSModalOpen}
+        title="Longest Common Subsequence Search Result"
+        onClose={onLCSModalClose}
       />
     </div>
   );
