@@ -18,6 +18,7 @@ const Demo = () => {
   const [highlightPositions, setHighlightPositions] = useState<number[]>([]);
   const [highlightPositionsPalindrome, setHighlightPositionsPalindrome] =
     useState<number[]>([]);
+  const [lenPalinfrome, setLenPalinfrome] = useState(0);
 
   const {
     isOpen: isPatternModalOpen,
@@ -61,9 +62,10 @@ const Demo = () => {
   };
 
   const handleSearchPalindrome = () => {
-    const positions = findPalindrom(textInput1);
+    const { positions, length } = findPalindrom(textInput1);
 
     setHighlightPositionsPalindrome(positions);
+    setLenPalinfrome(length);
 
     onPalindromeModalOpen();
   };
@@ -72,12 +74,14 @@ const Demo = () => {
     bgColor = "yellow",
     textColor = "black",
     highlightPositions,
+    highlightLength = patternText.length,
   }: {
     bgColor?: string;
     textColor?: string;
     highlightPositions: number[];
+    highlightLength?: number;
   }) => {
-    if (!patternText) return textInput1;
+    if (!highlightPositions.length) return textInput1;
 
     const parts = [];
     let lastIndex = 0;
@@ -85,9 +89,12 @@ const Demo = () => {
     highlightPositions.forEach((pos) => {
       parts.push(textInput1.substring(lastIndex, pos));
       parts.push(
-        `<mark style="background-color: ${bgColor}; color: ${textColor};">${textInput1.substring(pos, pos + patternText.length)}</mark>`
+        `<mark style="background-color: ${bgColor}; color: ${textColor};">${textInput1.substring(
+          pos,
+          pos + highlightLength
+        )}</mark>`
       );
-      lastIndex = pos + patternText.length;
+      lastIndex = pos + highlightLength;
     });
     parts.push(textInput1.substring(lastIndex));
 
@@ -220,6 +227,7 @@ const Demo = () => {
                 bgColor: "green",
                 textColor: "white",
                 highlightPositions: highlightPositionsPalindrome,
+                highlightLength: lenPalinfrome,
               }),
             }}
             style={{ whiteSpace: "pre-wrap" }}

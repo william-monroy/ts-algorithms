@@ -52,13 +52,12 @@ function manacher(D: string): string {
   return D.substring(start, start + maxLen);
 }
 
-export function findPalindrom(text: string): number[] {
-  console.log("Evaluando:", text);
+export function findPalindrom(text: string): {
+  positions: number[];
+  length: number;
+} {
   let palindrome = manacher(text);
   let positions = z(text, palindrome);
 
-  console.log("Palindromo:", palindrome);
-  console.log("Posiciones:", positions);
-
-  return positions;
+  return { positions: positions, length: palindrome.length };
 }
