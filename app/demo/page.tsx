@@ -4,26 +4,31 @@ import { Button } from "@nextui-org/button";
 import { Input, Textarea } from "@nextui-org/input";
 import { Card } from "@nextui-org/card";
 import { ChangeEvent, useState } from "react";
-import {
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  useDisclosure,
-} from "@nextui-org/modal";
-import { ScrollShadow } from "@nextui-org/scroll-shadow";
+import { useDisclosure } from "@nextui-org/modal";
 
+import CustomModal from "@/components/modal";
 import { title } from "@/components/primitives";
 import { z } from "@/lib/z";
+import { findPalindrom } from "@/lib/manacher";
 
 const Demo = () => {
   const [textInput1, setTextInput1] = useState("");
   const [textInput2, setTextInput2] = useState("");
   const [patternText, setPatternText] = useState("");
   const [highlightPositions, setHighlightPositions] = useState<number[]>([]);
+  const [highlightPositionsPalindrome, setHighlightPositionsPalindrome] =
+    useState<number[]>([]);
 
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const {
+    isOpen: isPatternModalOpen,
+    onOpen: onPatternModalOpen,
+    onOpenChange: onPatternModalClose,
+  } = useDisclosure();
+  const {
+    isOpen: isPalindromeModalOpen,
+    onOpen: onPalindromeModalOpen,
+    onOpenChange: onPalindromeModalClose,
+  } = useDisclosure();
 
   const handleFile1Read = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
@@ -52,10 +57,26 @@ const Demo = () => {
 
     setHighlightPositions(positions);
 
-    onOpen();
+    onPatternModalOpen();
   };
 
-  const highlightText = () => {
+  const handleSearchPalindrome = () => {
+    const positions = findPalindrom(textInput1);
+
+    setHighlightPositionsPalindrome(positions);
+
+    onPalindromeModalOpen();
+  };
+
+  const highlightText = ({
+    bgColor = "yellow",
+    textColor = "black",
+    highlightPositions,
+  }: {
+    bgColor?: string;
+    textColor?: string;
+    highlightPositions: number[];
+  }) => {
     if (!patternText) return textInput1;
 
     const parts = [];
@@ -64,7 +85,7 @@ const Demo = () => {
     highlightPositions.forEach((pos) => {
       parts.push(textInput1.substring(lastIndex, pos));
       parts.push(
-        `<mark>${textInput1.substring(pos, pos + patternText.length)}</mark>`
+        `<mark style="background-color: ${bgColor}; color: ${textColor};">${textInput1.substring(pos, pos + patternText.length)}</mark>`
       );
       lastIndex = pos + patternText.length;
     });
@@ -105,32 +126,40 @@ const Demo = () => {
           </label>
           <Textarea
             id="input_text_1"
-            placeholder="Type here..."
+            placeholder="Type here or upload a file..."
             rows={10} // Ajusta el tamaño según sea necesario
             value={textInput1}
             onChange={(e) => setTextInput1(e.target.value)}
           />
-          <Input
-            placeholder="Type here..."
-            value={patternText}
-            onChange={(e) => setPatternText(e.target.value)}
-          />
           <div className="flex flex-row gap-2">
             <Input
-              placeholder="Type pattern..."
+              className="w-8/12"
+              isDisabled={textInput1 === ""}
+              placeholder="Type here..."
               value={patternText}
               onChange={(e) => setPatternText(e.target.value)}
             />
-            <Button color="primary" onClick={handleSearchPattern} isDisabled={textInput1 === ""}>
-              Search
+            <Button
+              color="primary"
+              isDisabled={textInput1 === ""}
+              onClick={handleSearchPattern}
+            >
+              Search pattern
             </Button>
-            <Button color="secondary">Search palindrome</Button>
           </div>
-          <Button color="secondary" isDisabled={textInput1 === ""}>Search palindrome</Button>
-          <Input placeholder="Autocomplete here..." />
+          <Button
+            color="secondary"
+            isDisabled={textInput1 === ""}
+            onClick={handleSearchPalindrome}
+          >
+            Search palindrome
+          </Button>
+          <Input
+            isDisabled={textInput1 === ""}
+            placeholder="Autocomplete here..."
+          />
         </div>
         <div className="flex flex-col w-6/12 gap-2">
-          {/* <input accept=".txt" type="file" onChange={handleFile2Read} /> */}
           <label
             className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
             htmlFor="file_input_2"
@@ -154,37 +183,52 @@ const Demo = () => {
             Text 2
           </label>
           <Textarea
-            placeholder="Type here..."
+            placeholder="Type here or upload a file..."
             value={textInput2}
             onChange={(e) => setTextInput2(e.target.value)}
           />
-          <Button color="warning" isDisabled={textInput1 === "" || textInput2 === ""}>Find common subsequence</Button>
+          <Button
+            color="warning"
+            isDisabled={textInput1 === "" || textInput2 === ""}
+          >
+            Find common subsequence
+          </Button>
         </div>
       </Card>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                Results for pattern search &quot;{patternText}&quot;
-              </ModalHeader>
-              <ModalBody>
-                <ScrollShadow className="w-full h-full max-h-96">
-                  <div
-                    dangerouslySetInnerHTML={{ __html: highlightText() }}
-                    style={{ whiteSpace: "pre-wrap" }}
-                  />
-                </ScrollShadow>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+
+      {/* Modal para buscar patrón */}
+      <CustomModal
+        content={
+          <div
+            dangerouslySetInnerHTML={{
+              __html: highlightText({ highlightPositions }),
+            }}
+            style={{ whiteSpace: "pre-wrap" }}
+          />
+        }
+        isOpen={isPatternModalOpen}
+        title={`Results for pattern search "${patternText}"`}
+        onClose={onPatternModalClose}
+      />
+
+      {/* Modal para buscar palíndromo */}
+      <CustomModal
+        content={
+          <div
+            dangerouslySetInnerHTML={{
+              __html: highlightText({
+                bgColor: "green",
+                textColor: "white",
+                highlightPositions: highlightPositionsPalindrome,
+              }),
+            }}
+            style={{ whiteSpace: "pre-wrap" }}
+          />
+        }
+        isOpen={isPalindromeModalOpen}
+        title="Palindrome Search Result"
+        onClose={onPalindromeModalClose}
+      />
     </div>
   );
 };

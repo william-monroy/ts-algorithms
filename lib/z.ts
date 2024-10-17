@@ -46,7 +46,7 @@ export function z(T: string, P: string): number[] {
   for (let i = 0; i < l; i++) {
     if (Z[i] === P.length) {
       positions.push(i - P.length - 1);
-      console.log(i - P.length - 1);
+      // console.log(i - P.length - 1);
     }
   }
 
