@@ -47,6 +47,12 @@ export default function Home() {
               <Code color="primary">z-algorithm</Code>
             </Link>
           </span>
+          <span>
+            Find the longest palindromic substring with&nbsp;
+            <Link isExternal href={siteConfig.links.manacher}>
+              <Code color="primary">manacher</Code>
+            </Link>
+          </span>
         </Snippet>
       </div>
     </section>

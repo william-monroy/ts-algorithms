@@ -22,5 +22,7 @@ export const siteConfig = {
   links: {
     github: "https://github.com/william-monroy/ts-algorithms",
     z: "https://github.com/william-monroy/ts-algorithms/blob/main/lib/z.ts",
+    manacher:
+      "https://github.com/william-monroy/ts-algorithms/blob/main/lib/manacher.ts",
   },
 };

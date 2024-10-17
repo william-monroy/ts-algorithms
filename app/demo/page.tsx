@@ -148,7 +148,7 @@ const Demo = () => {
             />
             <Button
               color="primary"
-              isDisabled={textInput1 === ""}
+              isDisabled={textInput1 === "" || patternText === ""}
               onClick={handleSearchPattern}
             >
               Search pattern
