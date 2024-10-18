@@ -227,3 +227,43 @@ export const NextUILogo: React.FC<IconSvgProps> = (props) => {
     </svg>
   );
 };
+
+export const ChevronDown: React.FC<IconSvgProps> = (props) => {
+  const { width = 100, height = 24 } = props;
+
+  return (
+    <svg height={height} viewBox="0 0 512 512" width={width} {...props}>
+      <path
+        d="m112 184l144 144l144-144"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={48}
+      />
+    </svg>
+  );
+};
+
+export const ChevronUp: React.FC<IconSvgProps> = (props) => {
+  const { width, height = 24 } = props;
+
+  return (
+    <svg
+      height={height}
+      viewBox="0 0 512 512"
+      width={width}
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="m112 328l144-144l144 144"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={48}
+      />
+    </svg>
+  );
+};

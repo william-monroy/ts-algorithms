@@ -59,6 +59,12 @@ export default function Home() {
               <Code color="primary">lcs</Code>
             </Link>
           </span>
+          <span>
+            Auto-complete suggestions with&nbsp;
+            <Link isExternal href={siteConfig.links.trie}>
+              <Code color="primary">trie</Code>
+            </Link>
+          </span>
         </Snippet>
       </div>
     </section>

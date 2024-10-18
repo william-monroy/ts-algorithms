@@ -11,6 +11,7 @@ import { title } from "@/components/primitives";
 import { z } from "@/lib/z";
 import { findPalindrom } from "@/lib/manacher";
 import { findLCS } from "@/lib/lcs";
+import Autocomplete from "@/components/autocomplete";
 
 const Demo = () => {
   const [textInput1, setTextInput1] = useState("");
@@ -128,7 +129,7 @@ const Demo = () => {
         Let&apos;s try it out!
       </h1>
 
-      <Card className="flex flex-row w-full gap-4 p-4">
+      <Card className="flex flex-row w-full gap-4 p-4 relative">
         <div className="flex flex-col w-6/12 gap-2">
           <label
             className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
@@ -181,9 +182,9 @@ const Demo = () => {
           >
             Search palindrome
           </Button>
-          <Input
+          <Autocomplete
             isDisabled={textInput1 === ""}
-            placeholder="Autocomplete here..."
+            data={textInput1.split(" ")}
           />
         </div>
         <div className="flex flex-col w-6/12 gap-2">
